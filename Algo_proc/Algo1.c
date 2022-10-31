@@ -74,30 +74,91 @@ void devinette (){
 
 /* EXERCICE 3 */
 
+/* Fonction qui recherche des occurences dans un texte */
+
 int RechMot (char car){
-    FILE* f;
+    FILE* f; 
     char c;
     int compt = 0;
-    f = fopen("New Text Document.txt", "r");
-    if (f == NULL){
+    f = fopen("New Text Document.txt", "r"); // On ouvre un fichier
+    if (f == NULL){ // Si il n'existe pas, on sort
         printf("Le chemin passe en parametre n'est pas bon \n");
-        exit (0);
-    }else{
-        while (fread(&c, sizeof(char), 1, f)){
-            if (car == c){
-                compt++;
+        exit (0); 
+    }else{ // Sinon
+        while (fread(&c, sizeof(char), 1, f)){ // On parcours le fichier caractère par caractère
+            if (car == c){ // Si le caractère lu est le même que celui selectionné
+                compt++; // On incrémente le compteur
             }
         }
     }
-    fclose(f);
-    return compt;
+    fclose(f); // On ferme le fichier
+    return compt; // On retourne le compteur
 }
 
+/* Fonction initialisant la recherche des occurences */
+
 void occurences (){
+    // On demande à l'utilisateur d'entrer le caractère à étudier
     char c;
-    printf("Entrer un caractere a rechercher \n");
-    scanf ("%s", &c);
+    printf("Entrer un caractere a rechercher :\n");
+    scanf ("%c", &c);
+    // On affiche le nombre d'occurences
     printf ("Il y a %d occurences du caractere %c \n", RechMot(c), c);
+}
+
+/* Exercice 4 */
+
+/* Fonction qui calcule la puissance d'un nombre */
+
+float puiss (float nb, int n){
+    int prod = 1; // On initialise le produit à 1
+    for (int i = 0; i<n; i++){
+        prod = prod * nb; // On calcule la puissance
+    }
+    return prod; // On retourne la puissance
+}
+
+/* Fonction qui calcule la valeur d'un polynôme à un point donné */
+
+void init_poly (int n, float nb){
+    float sum = 0; // On initialise la somme
+    if (n == 0){ // Si le polynôme est constant
+        int a;
+        puts ("Entrer un coefficient \n");
+        scanf ("%d", &a);
+        sum = a; // La somme est juste la constante
+    }else{
+        int coeff; 
+        float puis;
+        puts ("Entrer tous les coefficients \n");
+        for (int i = 0; i<=n; i++){
+            // On entre tous les coefficients devant les X
+            printf ("Entrer le coefficient pour X^%d : \n", i);
+            scanf("%d", &coeff);
+            puis= puiss (nb, i); // On prend X à la puissance i
+            sum = sum + (puis*coeff); // On calcule la somme
+        }
+    }
+    printf ("Le polynome en %f vaut %f", sum, nb); // On affiche le résultat de la somme
+}
+
+/* Fonction initialisant le polynôme */
+
+void poly (){
+    int deg = 0;
+    float nb = 0;
+    if (nb != 0 || deg != 0){ // Erreur lors du chargement de la fonction
+        puts ("Erreur de chargement \n");
+        exit(0);
+    }
+    // On demande le degré du polynôme
+    printf("Entrer le degres du polynome : \n");
+    scanf("%d", &deg);
+    // On demande le point auquel il est calculé 
+    puts("Entrer un nombre reel :");
+    scanf("%f", &nb);
+    // On calcule le polynôme au point indiqué
+    init_poly(deg, nb);
 }
 
 /* MENU */
@@ -124,8 +185,11 @@ void menu () {
         case 2 : // Cas 2 deviner un nombre aléatoire
             devinette();
             break;
-        case 3:
+        case 3: // Cas 3 on recherche le nombre d'occurences d'un caractère dans un texte
             occurences();
+            break;
+        case 4 : // Cas 4 on calcule la valeur d'un polynome entrée par l'utilisateur
+            poly();
             break;
         default: // Cas par défaut on sort
             break;
@@ -139,3 +203,4 @@ int main (){
     menu(); 
     return 0;
 }
+s
