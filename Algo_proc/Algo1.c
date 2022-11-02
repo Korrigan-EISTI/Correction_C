@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#define MALLOC(x)((x*)malloc(sizeof(x)))
+#include <math.h>
 
 /* EXERCICE 1 */
 
@@ -124,7 +123,7 @@ void init_poly (int n, float nb){
     float sum = 0; // On initialise la somme
     if (n == 0){ // Si le polynôme est constant
         int a;
-        puts ("Entrer un coefficient \n");
+        puts ("Entrer un coefficient");
         scanf ("%d", &a);
         sum = a; // La somme est juste la constante
     }else{
@@ -139,7 +138,7 @@ void init_poly (int n, float nb){
             sum = sum + (puis*coeff); // On calcule la somme
         }
     }
-    printf ("Le polynome en %f vaut %f", sum, nb); // On affiche le résultat de la somme
+    printf ("Le polynome en %f vaut %f", nb, sum); // On affiche le résultat de la somme
 }
 
 /* Fonction initialisant le polynôme */
@@ -161,6 +160,89 @@ void poly (){
     init_poly(deg, nb);
 }
 
+/* EXERCICE 5 */
+
+/* Fonction qui calcule une factorielle */
+
+void factorielle (){
+    int nb = 0;
+    int prod = 1;
+    puts ("Entrer un nombre : ");
+    scanf ("%d", &nb);
+    for (int i = 1; i <= nb; i++){ // On boucle pour calculer la factorielle
+        prod = prod * i;
+    }
+    printf ("La factorielle de %d est %d", nb, prod); // On affiche la factorielle
+}
+
+void pgcd (){
+    int nbr1, nbr2, pgcd, i;
+  
+    printf("Entrez deux entiers: ");
+    scanf("%d", &nbr1);
+    scanf("%d", &nbr2);
+  
+    for(i=1; i <= nbr1 && i <= nbr2; i++)
+    {
+        if(nbr1%i==0 && nbr2%i==0)
+            pgcd = i;
+    }
+  
+    printf("PGCD de %d et %d = %d", nbr1, nbr2, pgcd);
+}
+
+int delt (int a, int b, int c){
+    int delta = ((b*b) - (4*a*c));
+    return delta;
+}
+
+void second_deg (){
+    int a, b, c;
+    puts ("Entrer les coefficient a, b et c");
+    scanf ("%d %d %d", &a, &b, &c);
+    int delta = delt(a, b, c);
+    if (delta > 0){
+        puts ("Deux solutions relles");
+        printf ("x1 = %f et x2=%f", (-b + sqrt(delta))/(2*a), (-b-sqrt(delta))/(2*a));
+    }else{
+        if (delta == 0){
+            puts ("Une soltion relles");
+            printf ("x= %f", -b/(2*a));
+        }else{
+            if (delta < 0){
+                puts("Pas de solutions reelles mais deux solutions complexes");
+                printf("x1 = %f - i%f et x2 = %f +i%f", -b/(2*a), sqrt(abs(delta))/(2*a), -b/(2*a), sqrt(abs(delta))/(2*a));
+            }
+        }
+    }
+}
+
+/* Fonction de menu maths */
+
+void menu_maths (){
+    printf("\e[1;1H\e[2J"); // Clear le terminal
+    int choix = 0;
+    if (choix != 0){ // Si la fonction c'est mal loadée, on sort du programme
+        exit(0);
+    }else{ // Sinon on laisse l'utilisateur choisir
+        printf("Entrer votre choix \n 1: factorielle \n 2: PGCD \n 3: Equation du second degre \n");
+        scanf("%d", &choix);
+        switch (choix){ // Selon le choix de l'utilisateur
+        case 1: // Cas 1 on calcule la factorielle
+            factorielle();
+            break;
+        case 2:
+            pgcd();
+            break;
+        case 3:
+            second_deg();
+            break;
+        default:
+            break;
+        }
+    }
+}
+
 /* MENU */
 
 void menu () {
@@ -168,7 +250,7 @@ void menu () {
     if (choix != 0){ // Si la fonction c'est mal loadée, on sort du programme
         exit(0);
     }else{ // Sinon on laisse l'utilisateur choisir
-        printf("Entrer votre choix \n 1: Min et Max d'un tableau \n 2: Cree un nombre entre 1 et 100 a deviner \n 3: Trouve le nombre d'occurences d'un caractere dans un texte \n");
+        printf("Entrer votre choix \n 1: Min et Max d'un tableau \n 2: Cree un nombre entre 1 et 100 a deviner \n 3: Trouve le nombre d'occurences d'un caractere dans un texte \n 4: Trouve la valeur d'un polynome quelquoncque en un point \n 5: Lance un menu effectuant des calculs mathematiques \n");
         scanf("%d", &choix);
         switch (choix)
         {
@@ -191,6 +273,9 @@ void menu () {
         case 4 : // Cas 4 on calcule la valeur d'un polynome entrée par l'utilisateur
             poly();
             break;
+        case 5: // Cas 5 on appelle un menu pour effectuer des calculs mathématiques
+            menu_maths();
+            break;
         default: // Cas par défaut on sort
             break;
         }
@@ -200,7 +285,7 @@ void menu () {
 /* FONCTION PRINCIPALE */
 
 int main (){
+    printf("\e[1;1H\e[2J"); // Clear le terminal
     menu(); 
     return 0;
 }
-s
