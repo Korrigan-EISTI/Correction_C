@@ -175,6 +175,8 @@ void factorielle (){
     printf ("La factorielle de %d est %d", nb, prod); // On affiche la factorielle
 }
 
+/* Fonction qui donne le PGCD de deux nombres */
+
 void pgcd (){
     int nbr1, nbr2, pgcd, i;
   
@@ -182,36 +184,41 @@ void pgcd (){
     scanf("%d", &nbr1);
     scanf("%d", &nbr2);
   
-    for(i=1; i <= nbr1 && i <= nbr2; i++)
+    for(i=1; i <= nbr1 && i <= nbr2; i++) // On s'arrête quand un des deux nombres est atteint
     {
-        if(nbr1%i==0 && nbr2%i==0)
-            pgcd = i;
+        if(nbr1%i==0 && nbr2%i==0) // Si les deux nombres sont divisibles par i
+            pgcd = i; // i devient le nouveau PGCD
     }
   
-    printf("PGCD de %d et %d = %d", nbr1, nbr2, pgcd);
+    printf("PGCD de %d et %d = %d", nbr1, nbr2, pgcd); // On affiche le PGCD
 }
+
+/* Fonction qui calcule le determinant d'une équation du second degré */
 
 int delt (int a, int b, int c){
     int delta = ((b*b) - (4*a*c));
     return delta;
 }
 
+/* Fonction qui résoud une équation du second degré */
+
 void second_deg (){
     int a, b, c;
+    // On entre les coefficients a pour X^2, b pour X et c tout seul
     puts ("Entrer les coefficient a, b et c");
     scanf ("%d %d %d", &a, &b, &c);
-    int delta = delt(a, b, c);
-    if (delta > 0){
+    int delta = delt(a, b, c); // On calcule le determinant
+    if (delta > 0){ // Si le déterminant est positif on a deux solutions réelles
         puts ("Deux solutions relles");
-        printf ("x1 = %f et x2=%f", (-b + sqrt(delta))/(2*a), (-b-sqrt(delta))/(2*a));
+        printf ("x1 = %f et x2=%f", (-b + sqrt(delta))/(2*a), (-b-sqrt(delta))/(2*a)); // On affiche les deux solutions réelles
     }else{
-        if (delta == 0){
+        if (delta == 0){ // Si le déterminant est égal à zéro alors on a qu'une solution
             puts ("Une soltion relles");
-            printf ("x= %f", -b/(2*a));
+            printf ("x= %f", -b/(2*a)); // On affiche cette solution
         }else{
-            if (delta < 0){
+            if (delta < 0){ // Si le déterminant est négatif alors on a deux solutions complexes
                 puts("Pas de solutions reelles mais deux solutions complexes");
-                printf("x1 = %f - i%f et x2 = %f +i%f", -b/(2*a), sqrt(abs(delta))/(2*a), -b/(2*a), sqrt(abs(delta))/(2*a));
+                printf("x1 = %f - i%f et x2 = %f +i%f", -b/(2*a), sqrt(abs(delta))/(2*a), -b/(2*a), sqrt(abs(delta))/(2*a)); // On affiche les deux solutions complexes
             }
         }
     }
@@ -231,13 +238,13 @@ void menu_maths (){
         case 1: // Cas 1 on calcule la factorielle
             factorielle();
             break;
-        case 2:
+        case 2: // Cas 2 on calcule le PGCD de deux nombres
             pgcd();
             break;
-        case 3:
+        case 3: // Cas 3 on résouds une équation du second degré
             second_deg();
             break;
-        default:
+        default: // Cas par défaut on sort
             break;
         }
     }
