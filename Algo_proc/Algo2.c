@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-
 /* Type définissant un point */
 
 typedef struct pt{
