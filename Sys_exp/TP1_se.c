@@ -1,9 +1,6 @@
 #include <stdio.h>
-
 #include <stdlib.h>
-
 #include <sys/types.h>
-
 #include <unistd.h>
 
 /* EXERCICE 1 */
@@ -123,6 +120,6 @@ void menu() {
 /* FONCTION PRINCIPALE */
 
 int main(void) {
-    menu(); // On appelle le menuet
+    menu(); // On appelle le menu
     return 0;
 }
